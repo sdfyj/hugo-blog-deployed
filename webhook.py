@@ -20,7 +20,7 @@ def gitpulldeployed():
 
 def hugodeployed():
     os.system('cd '+REPO_PATH+"; hugo --baseUrl=''")
-    os.system('\cp -rf '+ REPO_PATH +'* '+HTML_PATH)
+    os.system('\cp -rf '+ REPO_PATH +'public/* '+HTML_PATH)
 
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
