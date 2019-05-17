@@ -14,7 +14,8 @@ HTML_PATH = os.environ.get('HTML_PATH')
 def gitpulldeployed():
     repo = Repo(REPO_PATH)
     origin = repo.remotes.origin
-    origin.pull('--rebase')
+    #origin.pull('--rebase')
+    origin.pull()
 
 def hugodeployed():
     os.system('cd '+REPO_PATH)
