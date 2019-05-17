@@ -16,13 +16,16 @@ def gitpulldeployed():
     origin = repo.remotes.origin
     #origin.pull('--rebase')
     origin.pull()
-    os.system('cd '+REPO_PATH+"; git submodule update")
+    a = os.system('cd '+REPO_PATH+"; git submodule update")
+    return a
 
 def hugodeployed():
-    os.system("cd {0}; hugo --baseUrl=''".format(REPO_PATH))
+    a = os.system("cd {0}; hugo --baseUrl=''".format(REPO_PATH))
+    return a
 
 def htmldeployed():
-    os.system("\cp -rf {0}public/* {1}".format(REPO_PATH,HTML_PATH))
+    a = os.system("\cp -rf {0}public/* {1}".format(REPO_PATH,HTML_PATH))
+    return a
 
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
@@ -32,10 +35,10 @@ def webhook():
         secret = str.encode(GITHUB_SECRET_TOKEN)
         hashhex = hmac.new(secret, request.data, digestmod='sha1').hexdigest()
         if hmac.compare_digest(hashhex, signature):
-            gitpulldeployed()
-            hugodeployed()
-            htmldeployed()
-            return jsonify({'status': 'success'}), 200
+            a = gitpulldeployed()
+            b = hugodeployed()
+            c = htmldeployed()
+            return jsonify({'status': 'success','gitpull': a,'hugo': b,'html': c}), 200
         else:
             return jsonify({'status': 'bad token'}), 401
     else:
