@@ -16,9 +16,11 @@ def gitpulldeployed():
     origin = repo.remotes.origin
     #origin.pull('--rebase')
     origin.pull()
+    os.system('cd '+REPO_PATH+"; git submodule update")
 
 def hugodeployed():
     os.system('cd '+REPO_PATH+"; hugo --baseUrl=''")
+    os.system('\cp -rf '+ REPO_PATH +'* '+HTML_PATH)
 
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
