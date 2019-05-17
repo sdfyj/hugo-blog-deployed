@@ -18,8 +18,7 @@ def gitpulldeployed():
     origin.pull()
 
 def hugodeployed():
-    os.system('cd '+REPO_PATH)
-    os.system('hugo')
+    os.system('cd '+REPO_PATH+'; hugo')
 
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
