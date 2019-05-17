@@ -19,8 +19,7 @@ def gitpulldeployed():
 
 def hugodeployed():
     os.system('cd '+REPO_PATH)
-    os.system('cd '+REPO_PATH)
-    return
+    os.system('hugo')
 
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
@@ -31,6 +30,7 @@ def webhook():
         hashhex = hmac.new(secret, request.data, digestmod='sha1').hexdigest()
         if hmac.compare_digest(hashhex, signature):
             gitpulldeployed()
+            hugodeployed()
             return jsonify({'status': 'success'}), 200
         else:
             return jsonify({'status': 'bad token'}), 401
