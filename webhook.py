@@ -19,19 +19,22 @@ def gitpulldeployed():
     os.system('cd '+REPO_PATH+"; git submodule update")
 
 def hugodeployed():
-    os.system('cd '+REPO_PATH+"; hugo --baseUrl=''")
-    os.system('\cp -rf '+ REPO_PATH +'public/* '+HTML_PATH)
+    os.system("cd {0}; hugo --baseUrl=''".format(REPO_PATH))
+
+def htmldeployed():
+    os.system("\cp -rf {0}public/* {1}".format(REPO_PATH,HTML_PATH))
 
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
     if request.method == 'POST':
         signature = request.headers.get('X-Hub-Signature')
         sha, signature = signature.split('=')
-        secret = str.encode(GITHUB_SECRET_TOKEN )
+        secret = str.encode(GITHUB_SECRET_TOKEN)
         hashhex = hmac.new(secret, request.data, digestmod='sha1').hexdigest()
         if hmac.compare_digest(hashhex, signature):
             gitpulldeployed()
             hugodeployed()
+            htmldeployed()
             return jsonify({'status': 'success'}), 200
         else:
             return jsonify({'status': 'bad token'}), 401
