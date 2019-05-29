@@ -7,8 +7,8 @@ app = Flask(__name__)
 
 REPO_PATH = os.environ.get('REPO_PATH')
 HTML_PATH = os.environ.get('HTML_PATH')
-FILE_PATH = os.path.join(REPO_PATH,'..','file')
-IMG_PATH = os.path.join(HTML_PATH,'imgfile')
+FILE_PATH = os.path.join(REPO_PATH,'..','file/')
+IMG_PATH = os.path.join(HTML_PATH,'imgfile/')
 
 def htmldeployed():
     a = os.system("\cp -rf {0}* {1}".format(FILE_PATH,IMG_PATH))
